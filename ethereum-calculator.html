@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethereum Profit Calculator | ETH ROI Tool (2015-2026)</title>
+    <meta name="description" content="Calculate the ROI of Ethereum. See how much $1,000 of ETH bought in 2016 or 2017 would be worth today. Real-time profit calculator.">
+    <link rel="canonical" href="https://yourwebsite.com/ethereum-calculator" />
+    
+    <meta property="og:title" content="Ethereum Time Machine 💎">
+    <meta property="og:image" content="https://assets.coingecko.com/coins/images/279/large/ethereum.png">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_CLIENT_ID" crossorigin="anonymous"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ETHEREUM THEME (Blue/Purple) */
+        :root { --bg: #f8fafc; --card: #ffffff; --text-main: #0f172a; --text-sub: #64748b; --border: #e2e8f0; --primary: #627eea; /* ETH BLUE */ --accent: #627eea; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .main-container { background-color: var(--card); border-radius: 20px; box-shadow: 0 10px 40px -5px rgba(0,0,0,0.05); border: 1px solid var(--border); max-width: 950px; width: 100%; overflow: hidden; margin-top: 30px; margin-bottom: 50px; }
+        .header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); background: #ffffff; }
+        h1 { font-size: 1.8rem; margin: 0; font-weight: 800; letter-spacing: -0.5px; }
+        p.subtitle { color: var(--text-sub); margin: 10px 0 0 0; font-size: 1rem; }
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; }
+        .left-panel { padding: 40px; border-right: 1px solid var(--border); }
+        .right-panel { padding: 40px; background: #fafafa; display: flex; flex-direction: column; justify-content: center; min-height: 500px; }
+        @media (max-width: 800px) { .content-grid { grid-template-columns: 1fr; } .left-panel { border-right: none; border-bottom: 1px solid var(--border); padding: 25px; } .right-panel { min-height: auto; padding: 25px; } }
+        .input-group { margin-bottom: 24px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.75rem; color: var(--text-sub); font-weight: 600; text-transform: uppercase; }
+        input, select { width: 100%; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); font-size: 1rem; outline: none; transition: all 0.2s; font-weight: 500; }
+        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(98, 126, 234, 0.1); }
+        .currency-row { display: grid; grid-template-columns: 120px 1fr; gap: 12px; }
+        #activeCoinBox { background: #f0f5ff; border: 1px solid #dbeafe; padding: 12px 16px; border-radius: 10px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+        #activeCoinImg { width: 32px; height: 32px; border-radius: 50%; }
+        .coin-info h3 { margin: 0; font-size: 1rem; font-weight: 700; color: #1e40af; }
+        .coin-info p { margin: 0; font-size: 0.8rem; color: #1e3a8a; }
+        .cta-btn { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; transition: opacity 0.2s; }
+        .cta-btn:hover { opacity: 0.9; }
+        #result-content { display: none; width: 100%; animation: fadeUp 0.5s ease; }
+        .main-value { font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding-top: 25px; border-top: 1px solid var(--border); margin-top: 25px; }
+        .stat-box { background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 15px; }
+        .stat-box h4 { font-size: 0.7rem; color: var(--text-sub); margin: 0 0 5px 0; text-transform: uppercase; font-weight: 700; }
+        .stat-box p { font-size: 1rem; font-weight: 700; margin: 0; color: var(--text-main); }
+        .affiliate-card { background: #f0f5ff; border: 1px solid #dbeafe; border-radius: 12px; padding: 20px; text-align: center; margin-top: 30px; }
+        .aff-btn { display: block; width: 100%; padding: 12px; background: var(--primary); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; margin-bottom: 8px; }
+        .seo-section { max-width: 800px; margin: 0 auto 40px auto; padding: 0 20px; }
+        .seo-section h2 { text-align: center; margin-bottom: 30px; }
+        .faq-item { margin-bottom: 25px; }
+        .faq-item h3 { font-size: 1.1rem; margin-bottom: 8px; font-weight: 700; }
+        .faq-item p { color: var(--text-sub); line-height: 1.6; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="header">
+            <h1>Ethereum Profit Calculator</h1>
+            <p class="subtitle">See how much you would have made if you invested in ETH early.</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="left-panel">
+                <div class="input-group">
+                    <label>Investment Capital</label>
+                    <div class="currency-row">
+                        <select id="currency">
+                            <option value="usd">USD</option>
+                            <option value="eur">EUR</option>
+                            <option value="gbp">GBP</option>
+                            <option value="inr">INR</option>
+                        </select>
+                        <input type="number" id="investment" placeholder="1000" value="1000">
+                    </div>
+                </div>
+
+                <div id="activeCoinBox">
+                    <img id="activeCoinImg" src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" alt="Ethereum">
+                    <div class="coin-info">
+                        <h3 id="activeCoinName">Ethereum</h3>
+                        <p id="activeCoinSymbol">ETH</p>
+                    </div>
+                    <input type="hidden" id="selectedCoinId" value="ethereum">
+                    <input type="hidden" id="selectedCoinSymbol" value="ETH">
+                </div>
+
+                <div class="input-group">
+                    <label>Investment Date</label>
+                    <input type="date" id="datePicker"> 
+                </div>
+
+                <button id="calcBtn" class="cta-btn" onclick="calculateRealTime()">Calculate ETH Profit</button>
+            </div>
+
+            <div class="right-panel">
+                <div id="result-placeholder" style="text-align:center; color:#64748b;">
+                    <p>Enter your ETH investment details to see the numbers.</p>
+                </div>
+
+                <div id="result-content">
+                    <div class="main-value" id="finalValue">0.00</div>
+                    <div class="stats-grid">
+                        <div class="stat-box"><h4>Price Then</h4><p id="priceThenDisplay">0.00</p></div>
+                        <div class="stat-box"><h4>Price Now</h4><p id="priceNowDisplay">0.00</p></div>
+                        <div class="stat-box"><h4>Net Profit</h4><p id="pnlValue">0.00</p></div>
+                        <div class="stat-box"><h4>ROI</h4><p id="roiValue">0%</p></div>
+                    </div>
+
+                    <div class="affiliate-card">
+                        <h3 style="color:#1e40af;">Invest in Ethereum 💎</h3>
+                        <p style="color:#1e3a8a;">Stake or Trade ETH on the world's most trusted exchange.</p>
+                        <a href="YOUR_BINANCE_LINK" target="_blank" class="aff-btn">Buy ETH on Binance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="seo-section">
+        <h2>Ethereum Investment FAQ</h2>
+        <div class="faq-item">
+            <h3>What if I invested $1,000 in Ethereum in 2016?</h3>
+            <p>In 2016, Ethereum traded between $1 and $10. A $1,000 investment then would be worth millions today. Use the calculator to see the precise value based on the exact date.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Can I calculate ETH staking rewards?</h3>
+            <p>This calculator shows capital gains (price increase). To calculate staking rewards (APY), you would need to add approximately 3-5% per year to the final total.</p>
+        </div>
+    </div>
+
+    <footer style="text-align:center; padding:40px; color:#64748b; font-size:0.8rem;">
+        &copy; 2026 Crypto Profit Calculator.
+    </footer>
+
+    <script>
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        document.getElementById('datePicker').value = today.toISOString().split('T')[0];
+
+        // --- BACKUP API FUNCTION (The Fix) ---
+        async function fetchBackupHistory(symbol, date) {
+            try {
+                const ts = Math.floor(new Date(date).getTime() / 1000);
+                const url = `https://min-api.cryptocompare.com/data/pricehistorical?fsym=${symbol}&tsyms=USD&ts=${ts}`;
+                const res = await fetch(url);
+                const data = await res.json();
+                if (data[symbol] && data[symbol].USD) return data[symbol].USD;
+                return null;
+            } catch (e) { return null; }
+        }
+
+        async function calculateRealTime() {
+            const btn = document.getElementById('calcBtn');
+            const investment = parseFloat(document.getElementById('investment').value);
+            const currency = document.getElementById('currency').value.toLowerCase(); 
+            const dateStr = document.getElementById('datePicker').value;
+            const coinId = "ethereum";
+            const symbol = "ETH";
+
+            btn.disabled = true; btn.innerText = "Analyzing...";
+            
+            const [year, month, day] = dateStr.split('-');
+            const apiDate = `${day}-${month}-${year}`;
+
+            try {
+                let oldPrice = null;
+                let usedBackup = false;
+
+                // 1. Try CoinGecko First
+                try {
+                    const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/history?date=${apiDate}`);
+                    if(res.status === 429) throw new Error("Rate Limit"); // Catch Rate Limit
+                    const data = await res.json();
+                    if(data.market_data) oldPrice = data.market_data.current_price[currency];
+                } catch(e) { console.log("CG Failed/Busy"); }
+
+                // 2. Backup Source (CryptoCompare) if CG failed or blocked
+                if(!oldPrice) {
+                    oldPrice = await fetchBackupHistory(symbol, dateStr);
+                    usedBackup = true;
+                }
+
+                if(!oldPrice) throw new Error("Price data unavailable (Traffic High). Try again in 10s.");
+
+                // 3. Live Price
+                const liveRes = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=${currency}`);
+                const liveData = await liveRes.json();
+                let currentPrice = liveData[coinId][currency];
+
+                // Logic
+                const coinsBought = investment / oldPrice;
+                const currentValue = coinsBought * currentPrice;
+                const profit = currentValue - investment;
+                const roi = (profit / investment) * 100;
+
+                // Render
+                const sym = currency.toUpperCase() + " ";
+                document.getElementById('finalValue').innerText = sym + currentValue.toLocaleString(undefined, {minimumFractionDigits: 2});
+                document.getElementById('priceThenDisplay').innerText = oldPrice.toLocaleString();
+                document.getElementById('priceNowDisplay').innerText = currentPrice.toLocaleString();
+                document.getElementById('pnlValue').innerText = profit.toLocaleString(undefined, {minimumFractionDigits: 2});
+                document.getElementById('roiValue').innerText = roi.toFixed(2) + "%";
+
+                document.getElementById('result-placeholder').style.display = 'none';
+                document.getElementById('result-content').style.display = 'block';
+
+            } catch (err) {
+                alert(err.message);
+            } finally {
+                btn.disabled = false; btn.innerText = "Calculate ETH Profit";
+            }
+        }
+    </script>
+</body>
+</html>

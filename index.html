@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Crypto Profit Calculator | Historical ROI Tool (USD, EUR, GBP)</title>
+    <meta name="description" content="Calculate historical crypto returns for Bitcoin, Ethereum, and Solana. See exactly what your investment would be worth today in USD, EUR, or GBP.">
+    
+    <meta property="og:title" content="Crypto Profit Calculator 🚀">
+    <meta property="og:description" content="See exactly how much you missed out on (or saved). Calculate your historical crypto ROI instantly.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=1200&q=80">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_CLIENT_ID" crossorigin="anonymous"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #f8fafc;          
+            --card: #ffffff;     
+            --text-main: #0f172a;   
+            --text-sub: #64748b;  
+            --border: #e2e8f0;      
+            --primary: #0f172a;      
+            --accent: #2563eb;      
+            --success: #16a34a;     
+            --danger: #dc2626;      
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .main-container {
+            background-color: var(--card);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px -5px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            max-width: 950px;
+            width: 100%;
+            overflow: hidden;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .header {
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            background: #ffffff;
+        }
+        h1 { font-size: 1.8rem; margin: 0; font-weight: 800; letter-spacing: -0.5px; }
+        p.subtitle { color: var(--text-sub); margin: 10px 0 0 0; font-size: 1rem; }
+
+        /* LAYOUT */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; }
+        .left-panel { padding: 40px; border-right: 1px solid var(--border); }
+        .right-panel { padding: 40px; background: #fafafa; display: flex; flex-direction: column; justify-content: center; min-height: 500px; }
+
+        @media (max-width: 800px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .left-panel { border-right: none; border-bottom: 1px solid var(--border); padding: 25px; }
+            .right-panel { min-height: auto; padding: 25px; }
+        }
+
+        /* INPUTS */
+        .input-group { margin-bottom: 24px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.75rem; color: var(--text-sub); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        input, select {
+            width: 100%; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border);
+            background: #ffffff; color: var(--text-main); font-size: 1rem; outline: none;
+            transition: all 0.2s; font-weight: 500; appearance: none;
+        }
+        input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(37,99,235,0.1); }
+
+        .currency-row { display: grid; grid-template-columns: 120px 1fr; gap: 12px; }
+        .asset-select-row { display: grid; grid-template-columns: 1fr 1.3fr; gap: 12px; }
+
+        /* ACTIVE ASSET BOX */
+        #activeCoinBox {
+            background: #f8fafc; border: 1px solid var(--border); padding: 12px 16px;
+            border-radius: 10px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+        }
+        #activeCoinImg { width: 32px; height: 32px; border-radius: 50%; }
+        .coin-info h3 { margin: 0; font-size: 1rem; font-weight: 700; }
+        .coin-info p { margin: 0; font-size: 0.8rem; color: var(--text-sub); }
+
+        /* SEARCH RESULTS */
+        .search-wrapper { position: relative; width: 100%; }
+        #searchResults {
+            position: absolute; top: 100%; left: 0; width: 100%;
+            background: #ffffff; border: 1px solid var(--border);
+            border-radius: 12px; max-height: 200px; overflow-y: auto;
+            z-index: 50; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 5px;
+        }
+        .search-item { padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
+        .search-item:hover { background: #f8fafc; }
+        .search-item img { width: 20px; height: 20px; border-radius: 50%; }
+
+        /* BUTTONS */
+        .cta-btn {
+            width: 100%; padding: 16px; background: var(--primary); color: white;
+            border: none; border-radius: 10px; font-size: 1rem; font-weight: 700;
+            cursor: pointer; margin-top: 10px; transition: opacity 0.2s;
+        }
+        .cta-btn:hover { opacity: 0.9; }
+        .cta-btn:disabled { opacity: 0.5; cursor: wait; background: #475569; }
+
+        /* STATUS MESSAGE */
+        #statusMessage { margin-top: 15px; font-size: 0.85rem; text-align: center; padding: 12px; border-radius: 8px; display: none; }
+        .status-error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        
+        /* RESULTS AREA */
+        #result-content { display: none; width: 100%; animation: fadeUp 0.5s ease; }
+        #result-placeholder { text-align: center; color: var(--text-sub); opacity: 0.7; font-size: 0.9rem; line-height: 1.5; padding: 0 20px;}
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .result-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .result-label { font-size: 0.8rem; color: var(--text-sub); font-weight: 600; text-transform: uppercase; }
+        .main-value { font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 20px; letter-spacing: -1px; }
+        .badge { padding: 6px 14px; border-radius: 100px; font-size: 0.9rem; font-weight: 700; }
+        .badge-green { background: #dcfce7; color: #166534; }
+        .badge-red { background: #fee2e2; color: #991b1b; }
+
+        /* 4-GRID STATS */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding-top: 25px; border-top: 1px solid var(--border); margin-top: 25px; }
+        .stat-box { background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 15px; }
+        .stat-box h4 { font-size: 0.7rem; color: var(--text-sub); margin: 0 0 5px 0; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        .stat-box p { font-size: 1rem; font-weight: 700; margin: 0; color: var(--text-main); }
+
+        /* --- AFFILIATE SECTION --- */
+        #affiliate-section {
+            display: none; /* Hidden until calc is done */
+            margin-top: 30px;
+            animation: fadeUp 0.8s ease;
+        }
+        .affiliate-card {
+            background: #eff6ff; border: 1px solid #dbeafe; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 15px;
+        }
+        .affiliate-card h3 { margin: 0 0 5px 0; color: #1e40af; font-size: 1rem; }
+        .affiliate-card p { margin: 0 0 15px 0; font-size: 0.85rem; color: #1e3a8a; }
+        
+        .aff-btn {
+            display: block; width: 100%; padding: 12px; background: #2563eb; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; transition: transform 0.1s;
+        }
+        .aff-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .aff-btn.secondary { background: white; color: #0f172a; border: 1px solid #cbd5e1; }
+
+        /* NEWSLETTER */
+        .newsletter-box { text-align: center; margin-top: 25px; border-top: 1px solid #e2e8f0; padding-top: 25px; }
+        .newsletter-box h4 { margin: 0 0 5px 0; font-size: 0.9rem; }
+        .newsletter-box p { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 10px; }
+        .news-form { display: flex; gap: 8px; }
+        .news-form input { flex: 1; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; }
+        .news-form button { padding: 10px 15px; background: #0f172a; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+
+        /* AD BANNER */
+        .ad-banner {
+            width: 100%; max-width: 950px; height: 120px; 
+            background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: #94a3b8; font-size: 0.8rem; margin: 0 auto 40px auto;
+        }
+
+        /* GLOBAL SEO CONTENT */
+        .seo-section { max-width: 800px; margin: 0 auto 40px auto; padding: 0 20px; }
+        .seo-section h2 { text-align: center; margin-bottom: 30px; font-size: 1.4rem; }
+        .faq-item { margin-bottom: 25px; }
+        .faq-item h3 { font-size: 1.1rem; margin-bottom: 8px; font-weight: 700; }
+        .faq-item p { color: var(--text-sub); line-height: 1.6; font-size: 0.95rem; }
+
+        .site-footer { text-align: center; font-size: 0.8rem; color: var(--text-sub); border-top: 1px solid #e2e8f0; padding-top: 30px; padding-bottom: 30px; width: 100%; }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="header">
+            <h1>Crypto Profit Calculator</h1>
+            <p class="subtitle">Calculate your historical return on investment (ROI) with real-time historical data.</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="left-panel">
+                <div class="input-group">
+                    <label>Investment Capital</label>
+                    <div class="currency-row">
+                        <select id="currency">
+                            <option value="usd" selected>USD</option>
+                            <option value="eur">EUR</option>
+                            <option value="gbp">GBP</option>
+                            <option value="cad">CAD</option>
+                            <option value="aud">AUD</option>
+                            <option value="jpy">JPY</option>
+                            <option value="inr">INR</option>
+                            <option value="kes">KES</option>
+                            <option value="ngn">NGN</option>
+                            <option value="zar">ZAR</option>
+                            <option value="aed">AED</option>
+                        </select>
+                        <input type="number" id="investment" placeholder="1000" value="1000">
+                    </div>
+                </div>
+
+                <div id="activeCoinBox">
+                    <img id="activeCoinImg" src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="Coin">
+                    <div class="coin-info">
+                        <h3 id="activeCoinName">Bitcoin</h3>
+                        <p id="activeCoinSymbol">BTC</p>
+                    </div>
+                    <input type="hidden" id="selectedCoinId" value="bitcoin">
+                    <input type="hidden" id="selectedCoinSymbol" value="BTC">
+                </div>
+
+                <div class="input-group">
+                    <label>Select Asset</label>
+                    <div class="asset-select-row">
+                        <select id="quickSelect" onchange="useDropdown()">
+                            <option value="" disabled selected>Quick Pick</option>
+                            <option value="bitcoin" data-symbol="BTC">Bitcoin</option>
+                            <option value="ethereum" data-symbol="ETH">Ethereum</option>
+                            <option value="solana" data-symbol="SOL">Solana</option>
+                            <option value="binancecoin" data-symbol="BNB">BNB</option>
+                            <option value="ripple" data-symbol="XRP">XRP</option>
+                            <option value="cardano" data-symbol="ADA">Cardano</option>
+                            <option value="dogecoin" data-symbol="DOGE">Dogecoin</option>
+                            <option value="pepe" data-symbol="PEPE">Pepe</option>
+                            <option value="shiba-inu" data-symbol="SHIB">Shiba Inu</option>
+                            <option value="litecoin" data-symbol="LTC">Litecoin</option>
+                        </select>
+                        <div class="search-wrapper">
+                            <input type="text" id="coinSearch" placeholder="Search 10k+ coins..." onkeyup="searchCoin()" autocomplete="off">
+                            <div id="searchResults"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Investment Date</label>
+                    <select id="timeFrameSelect" onchange="applyTimeFrame(this.value)" style="margin-bottom:10px;">
+                        <option value="" disabled selected>Quick Select Date</option>
+                        <optgroup label="Recent">
+                            <option value="w-1">1 Week Ago</option>
+                            <option value="m-1">1 Month Ago</option>
+                            <option value="m-6">6 Months Ago</option>
+                        </optgroup>
+                        <optgroup label="Long Term">
+                            <option value="y-1">1 Year Ago</option>
+                            <option value="y-5">5 Years Ago</option>
+                            <option value="y-10">10 Years Ago (2016)</option>
+                            <option value="y-13">13 Years Ago (2013)</option>
+                        </optgroup>
+                    </select>
+                    <div id="dateFeedback"></div>
+                    <input type="date" id="datePicker" onchange="resetDropdown()"> 
+                </div>
+
+                <button id="calcBtn" class="cta-btn" onclick="calculateRealTime()">Analyze Performance</button>
+                <div id="statusMessage"></div>
+            </div>
+
+            <div class="right-panel">
+                <div id="result-placeholder">
+                    <p>Enter your details on the left to see the numbers.</p>
+                </div>
+
+                <div id="result-content">
+                    <div class="result-row">
+                        <span class="result-label">Current Value</span>
+                        <span id="percentageBadge" class="badge badge-green">0%</span>
+                    </div>
+                    <div class="main-value" id="finalValue">0.00</div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <h4>Price Then</h4>
+                            <p id="priceThenDisplay">0.00</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>Price Now</h4>
+                            <p id="priceNowDisplay">0.00</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>Net Profit</h4>
+                            <p id="pnlValue">0.00</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>Forex Rate</h4>
+                            <p id="forexDisplay">1.00</p>
+                        </div>
+                    </div>
+
+                    <div id="affiliate-section">
+                        <div class="affiliate-card">
+                            <h3>Ready to Invest? 🚀</h3>
+                            <p>Securely buy & store crypto with our recommended partners.</p>
+                            
+                            <a href="https://accounts.binance.com/register" target="_blank" class="aff-btn">Trade on Binance (Global)</a>
+                            
+                            <a href="https://www.coinbase.com/signup" target="_blank" class="aff-btn secondary">Sign up on Coinbase (USA/EU)</a>
+                            
+                            <a href="https://www.bybit.com/register" target="_blank" class="aff-btn secondary">Get Bybit Bonus</a>
+                            
+                            <a href="https://shop.ledger.com" target="_blank" class="aff-btn secondary">Get a Ledger Wallet (Secure)</a>
+                        </div>
+
+                        <div class="newsletter-box">
+                            <h4>Get "Gem" Alerts Weekly</h4>
+                            <p>Join 10,000+ investors getting low-cap coin alerts.</p>
+                            <div class="news-form">
+                                <input type="email" placeholder="Enter email">
+                                <button>Join</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-banner">
+        ADVERTISEMENT SPACE (Google AdSense)
+    </div>
+
+    <div class="seo-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <h3>Is this Crypto Profit Calculator accurate?</h3>
+            <p>Yes. We pull historical price data from CoinGecko and CryptoCompare APIs, which are the industry standards for accuracy. Returns are calculated based on the daily close price of the asset.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I calculate taxes on crypto profits?</h3>
+            <p>In many jurisdictions (like the US and UK), crypto profits are subject to Capital Gains Tax. This calculator shows your gross profit. We recommend using a dedicated tax software for official reporting.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Can I calculate Ethereum or Solana ROI?</h3>
+            <p>Yes. Our tool supports Bitcoin, Ethereum, Solana, XRP, and over 10,000 other cryptocurrencies. Use the "Select Asset" dropdown to find your coin.</p>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p>&copy; <span id="yearDisplay"></span> Crypto Profit Calculator. Not financial advice.</p>
+    </footer>
+
+    <script>
+        // --- SETUP ---
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        document.getElementById('datePicker').value = today.toISOString().split('T')[0];
+        document.getElementById('yearDisplay').innerText = new Date().getFullYear();
+        const apiCache = {}; 
+
+        // --- UX HELPERS ---
+        function showStatus(msg, type) {
+            const el = document.getElementById('statusMessage');
+            el.style.display = 'block';
+            el.innerText = msg;
+            el.className = type === 'error' ? 'status-error' : 'status-loading';
+        }
+        function hideStatus() { document.getElementById('statusMessage').style.display = 'none'; }
+
+        // --- TIME LOGIC ---
+        function applyTimeFrame(val) {
+            if (!val) return;
+            const d = new Date();
+            const [unit, amount] = val.split('-');
+            const num = parseInt(amount);
+            if (unit === 'w') d.setDate(d.getDate() - (num * 7));
+            else if (unit === 'm') d.setMonth(d.getMonth() - num);
+            else if (unit === 'y') d.setFullYear(d.getFullYear() - num);
+            const dateStr = d.toISOString().split('T')[0];
+            document.getElementById('datePicker').value = dateStr;
+            document.getElementById('dateFeedback').innerText = `Selected: ${dateStr}`;
+        }
+        function resetDropdown() {
+            document.getElementById('timeFrameSelect').value = "";
+            document.getElementById('dateFeedback').innerText = "";
+        }
+
+        // --- COIN LOGIC ---
+        function useDropdown() {
+            const select = document.getElementById('quickSelect');
+            const id = select.value;
+            if (!id) return;
+            const option = select.options[select.selectedIndex];
+            const symbol = option.getAttribute('data-symbol');
+            const images = {
+                'bitcoin': 'https://assets.coingecko.com/coins/images/1/small/bitcoin.png',
+                'ethereum': 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
+                'solana': 'https://assets.coingecko.com/coins/images/4128/small/solana.png',
+                'binancecoin': 'https://assets.coingecko.com/coins/images/825/small/binance-coin-logo.png',
+                'ripple': 'https://assets.coingecko.com/coins/images/44/small/xrp-symbol-white-128.png',
+                'cardano': 'https://assets.coingecko.com/coins/images/975/small/cardano.png',
+                'dogecoin': 'https://assets.coingecko.com/coins/images/5/small/dogecoin.png',
+                'pepe': 'https://assets.coingecko.com/coins/images/29850/small/pepe-token.jpeg',
+                'shiba-inu': 'https://assets.coingecko.com/coins/images/11939/small/shiba.png',
+                'litecoin': 'https://assets.coingecko.com/coins/images/2/small/litecoin.png'
+            };
+            updateActiveCoin(id, option.text, symbol, images[id] || '');
+            document.getElementById('coinSearch').value = "";
+        }
+
+        let debounceTimer;
+        async function searchCoin() {
+            const query = document.getElementById('coinSearch').value;
+            const resultsBox = document.getElementById('searchResults');
+            if (query.length < 2) { resultsBox.style.display = 'none'; return; }
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(async () => {
+                try {
+                    const res = await fetch(`https://api.coingecko.com/api/v3/search?query=${query}`, { credentials: 'omit' });
+                    if (res.status === 429) return;
+                    const data = await res.json();
+                    resultsBox.innerHTML = ''; 
+                    const coins = data.coins.slice(0, 5);
+                    if(coins.length === 0) { resultsBox.innerHTML = '<div class="search-item" style="color:#64748b;">No coin found.</div>'; return; }
+                    coins.forEach(coin => {
+                        const div = document.createElement('div');
+                        div.className = 'search-item';
+                        div.innerHTML = `<img src="${coin.thumb}"> <span>${coin.name} <span style="color:#94a3b8; font-size:0.8em">(${coin.symbol})</span></span>`;
+                        div.onclick = () => {
+                            updateActiveCoin(coin.id, coin.name, coin.symbol, coin.thumb);
+                            resultsBox.style.display = 'none';
+                            document.getElementById('coinSearch').value = "";
+                            document.getElementById('quickSelect').value = ""; 
+                        };
+                        resultsBox.appendChild(div);
+                    });
+                    resultsBox.style.display = 'block';
+                } catch (err) {}
+            }, 1000); 
+        }
+
+        function updateActiveCoin(id, name, symbol, imgUrl) {
+            document.getElementById('selectedCoinId').value = id;
+            document.getElementById('selectedCoinSymbol').value = symbol.toUpperCase();
+            document.getElementById('activeCoinName').innerText = name;
+            document.getElementById('activeCoinSymbol').innerText = symbol.toUpperCase();
+            document.getElementById('activeCoinImg').src = imgUrl;
+        }
+
+        // --- DATA ENGINE ---
+        async function fetchBackupHistory(symbol, date) {
+            try {
+                const ts = Math.floor(new Date(date).getTime() / 1000);
+                const url = `https://min-api.cryptocompare.com/data/pricehistorical?fsym=${symbol}&tsyms=USD&ts=${ts}`;
+                const res = await fetch(url);
+                const data = await res.json();
+                if (data[symbol] && data[symbol].USD) return data[symbol].USD;
+                return null;
+            } catch (e) { return null; }
+        }
+
+        let isProcessing = false;
+        async function calculateRealTime() {
+            if (isProcessing) return;
+            const btn = document.getElementById('calcBtn');
+            const investment = parseFloat(document.getElementById('investment').value);
+            const coinId = document.getElementById('selectedCoinId').value;
+            const symbol = document.getElementById('selectedCoinSymbol').value;
+            const currency = document.getElementById('currency').value.toLowerCase(); 
+            const dateStr = document.getElementById('datePicker').value;
+
+            if (!dateStr || new Date(dateStr) > new Date()) { alert("Please pick a valid date."); return; }
+
+            isProcessing = true;
+            btn.disabled = true;
+            btn.innerText = "Analyzing...";
+            hideStatus();
+            
+            const [year, month, day] = dateStr.split('-');
+            const apiDate = `${day}-${month}-${year}`;
+
+            try {
+                let oldPrice = null;
+                let usedBackup = false;
+
+                // 1. Primary Source (Skip for deep history > 5 years to be safe)
+                if (parseInt(year) > 2019) {
+                    try {
+                        const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/history?date=${apiDate}`, { credentials: 'omit' });
+                        if (res.ok) {
+                            const data = await res.json();
+                            if (data.market_data?.current_price?.usd) oldPrice = data.market_data.current_price.usd;
+                        }
+                    } catch (e) {}
+                }
+
+                // 2. Backup Source
+                if (!oldPrice) {
+                    oldPrice = await fetchBackupHistory(symbol, dateStr);
+                    if(oldPrice) usedBackup = true;
+                }
+
+                if (!oldPrice) throw new Error(`Data Unavailable for ${symbol} in ${year}.`);
+
+                // 3. Live Price
+                const liveRes = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=${currency},usd`, { credentials: 'omit' });
+                if (!liveRes.ok) throw new Error("Connection Error");
+                const liveData = await liveRes.json();
+
+                // 4. Logic
+                let currentPrice = liveData[coinId][currency];
+                let currentPriceUSD = liveData[coinId].usd;
+                const forexRate = currentPrice / currentPriceUSD;
+                
+                let oldPriceLocal = oldPrice;
+                if (usedBackup || !liveData[coinId][currency] || parseInt(year) > 2019) {
+                    oldPriceLocal = oldPrice * forexRate;
+                }
+
+                const coinsBought = investment / oldPriceLocal;
+                const currentValue = coinsBought * currentPrice;
+                const netProfit = currentValue - investment;
+                const profitPercent = (netProfit / investment) * 100;
+
+                // 5. Render
+                const sym = currency.toUpperCase() + " ";
+                document.getElementById('finalValue').innerText = sym + currentValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                
+                const badge = document.getElementById('percentageBadge');
+                badge.innerText = (profitPercent >= 0 ? '+' : '') + profitPercent.toLocaleString(undefined, {maximumFractionDigits: 2}) + '%';
+                badge.className = profitPercent >= 0 ? 'badge badge-green' : 'badge badge-red';
+
+                document.getElementById('priceThenDisplay').innerText = sym + oldPriceLocal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                document.getElementById('priceNowDisplay').innerText = sym + currentPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                
+                const pnlEl = document.getElementById('pnlValue');
+                pnlEl.innerText = (netProfit >= 0 ? '+' : '') + netProfit.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                pnlEl.style.color = netProfit >= 0 ? '#16a34a' : '#dc2626';
+
+                const forexEl = document.getElementById('forexDisplay');
+                if (currency === 'usd') forexEl.innerText = "1.00";
+                else forexEl.innerText = "1 USD ≈ " + forexRate.toFixed(2) + " " + currency.toUpperCase();
+
+                document.getElementById('result-placeholder').style.display = 'none';
+                document.getElementById('result-content').style.display = 'block';
+                
+                // Show Affiliate Section
+                document.getElementById('affiliate-section').style.display = 'block';
+
+            } catch (error) {
+                showStatus(error.message || "Network Error", 'error');
+            } finally {
+                setTimeout(() => { 
+                    isProcessing = false; 
+                    btn.disabled = false; 
+                    btn.innerText = "Analyze Performance"; 
+                }, 500);
+            }
+        }
+    </script>
+</body>
+</html>

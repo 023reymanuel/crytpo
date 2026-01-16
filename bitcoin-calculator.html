@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Profit Calculator | ROI Tool (2009-2026)</title>
+    <meta name="description" content="Calculate exactly how much you would have if you invested $10, $100, or $1,000 in Bitcoin years ago. Real-time BTC profit calculator.">
+    <link rel="canonical" href="https://yourwebsite.com/bitcoin-calculator" />
+    
+    <meta property="og:title" content="If I Invested in Bitcoin Calculator 🚀">
+    <meta property="og:image" content="https://assets.coingecko.com/coins/images/1/large/bitcoin.png">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_CLIENT_ID" crossorigin="anonymous"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Shared CSS */
+        :root { --bg: #f8fafc; --card: #ffffff; --text-main: #0f172a; --text-sub: #64748b; --border: #e2e8f0; --primary: #f7931a; /* BTC ORANGE */ --success: #16a34a; --danger: #dc2626; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .main-container { background-color: var(--card); border-radius: 20px; box-shadow: 0 10px 40px -5px rgba(0,0,0,0.05); border: 1px solid var(--border); max-width: 950px; width: 100%; overflow: hidden; margin-top: 30px; margin-bottom: 50px; }
+        .header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); background: #ffffff; }
+        h1 { font-size: 1.8rem; margin: 0; font-weight: 800; letter-spacing: -0.5px; }
+        p.subtitle { color: var(--text-sub); margin: 10px 0 0 0; font-size: 1rem; }
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; }
+        .left-panel { padding: 40px; border-right: 1px solid var(--border); }
+        .right-panel { padding: 40px; background: #fafafa; display: flex; flex-direction: column; justify-content: center; min-height: 500px; }
+        @media (max-width: 800px) { .content-grid { grid-template-columns: 1fr; } .left-panel { border-right: none; border-bottom: 1px solid var(--border); padding: 25px; } .right-panel { min-height: auto; padding: 25px; } }
+        .input-group { margin-bottom: 24px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.75rem; color: var(--text-sub); font-weight: 600; text-transform: uppercase; }
+        input, select { width: 100%; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); font-size: 1rem; outline: none; transition: all 0.2s; font-weight: 500; }
+        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(247, 147, 26, 0.1); }
+        .currency-row { display: grid; grid-template-columns: 120px 1fr; gap: 12px; }
+        #activeCoinBox { background: #fff7ed; border: 1px solid #ffedd5; padding: 12px 16px; border-radius: 10px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+        #activeCoinImg { width: 32px; height: 32px; border-radius: 50%; }
+        .coin-info h3 { margin: 0; font-size: 1rem; font-weight: 700; color: #9a3412; }
+        .coin-info p { margin: 0; font-size: 0.8rem; color: #c2410c; }
+        .cta-btn { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; transition: opacity 0.2s; }
+        .cta-btn:hover { opacity: 0.9; }
+        #result-content { display: none; width: 100%; animation: fadeUp 0.5s ease; }
+        .main-value { font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding-top: 25px; border-top: 1px solid var(--border); margin-top: 25px; }
+        .stat-box { background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 15px; }
+        .stat-box h4 { font-size: 0.7rem; color: var(--text-sub); margin: 0 0 5px 0; text-transform: uppercase; font-weight: 700; }
+        .stat-box p { font-size: 1rem; font-weight: 700; margin: 0; color: var(--text-main); }
+        #affiliate-section { display: none; margin-top: 30px; animation: fadeUp 0.8s ease; }
+        .affiliate-card { background: #fff7ed; border: 1px solid #ffedd5; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 15px; }
+        .aff-btn { display: block; width: 100%; padding: 12px; background: var(--primary); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; margin-bottom: 8px; }
+        .seo-section { max-width: 800px; margin: 0 auto 40px auto; padding: 0 20px; }
+        .seo-section h2 { text-align: center; margin-bottom: 30px; }
+        .faq-item { margin-bottom: 25px; }
+        .faq-item h3 { font-size: 1.1rem; margin-bottom: 8px; font-weight: 700; }
+        .faq-item p { color: var(--text-sub); line-height: 1.6; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="header">
+            <h1>Bitcoin Profit Calculator</h1>
+            <p class="subtitle">See how much you would have made if you bought Bitcoin early.</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="left-panel">
+                <div class="input-group">
+                    <label>Investment Capital</label>
+                    <div class="currency-row">
+                        <select id="currency">
+                            <option value="usd">USD</option>
+                            <option value="eur">EUR</option>
+                            <option value="gbp">GBP</option>
+                            <option value="inr">INR</option>
+                        </select>
+                        <input type="number" id="investment" placeholder="100" value="100">
+                    </div>
+                </div>
+
+                <div id="activeCoinBox">
+                    <img id="activeCoinImg" src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="Bitcoin">
+                    <div class="coin-info">
+                        <h3 id="activeCoinName">Bitcoin</h3>
+                        <p id="activeCoinSymbol">BTC</p>
+                    </div>
+                    <input type="hidden" id="selectedCoinId" value="bitcoin">
+                    <input type="hidden" id="selectedCoinSymbol" value="BTC">
+                </div>
+
+                <div class="input-group">
+                    <label>Investment Date</label>
+                    <input type="date" id="datePicker"> 
+                </div>
+
+                <button id="calcBtn" class="cta-btn" onclick="calculateRealTime()">Calculate BTC Profit</button>
+            </div>
+
+            <div class="right-panel">
+                <div id="result-placeholder" style="text-align:center; color:#64748b;">
+                    <p>Enter your Bitcoin investment details to see the numbers.</p>
+                </div>
+
+                <div id="result-content">
+                    <div class="main-value" id="finalValue">0.00</div>
+                    <div class="stats-grid">
+                        <div class="stat-box"><h4>Price Then</h4><p id="priceThenDisplay">0.00</p></div>
+                        <div class="stat-box"><h4>Price Now</h4><p id="priceNowDisplay">0.00</p></div>
+                        <div class="stat-box"><h4>Net Profit</h4><p id="pnlValue">0.00</p></div>
+                        <div class="stat-box"><h4>ROI</h4><p id="roiValue">0%</p></div>
+                    </div>
+
+                    <div id="affiliate-section">
+                        <div class="affiliate-card">
+                            <h3 style="color:#9a3412;">Buy Bitcoin Instantly ⚡</h3>
+                            <p style="color:#c2410c;">Secure your future. Buy BTC on the world's safest exchange.</p>
+                            <a href="YOUR_BINANCE_LINK" target="_blank" class="aff-btn">Buy Bitcoin on Binance</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="seo-section">
+        <h2>Bitcoin Investment FAQ</h2>
+        <div class="faq-item">
+            <h3>What if I invested $100 in Bitcoin in 2010?</h3>
+            <p>In 2010, Bitcoin's price was less than $0.10. A $100 investment back then would be worth hundreds of millions of dollars today. Use this tool to check the exact ROI for any specific date.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How to calculate Bitcoin profit?</h3>
+            <p>Profit = (Current Price - Buy Price) * Amount of BTC. This calculator does the math for you instantly using historical price data from CoinGecko.</p>
+        </div>
+    </div>
+
+    <footer style="text-align:center; padding:40px; color:#64748b; font-size:0.8rem;">
+        &copy; 2026 Crypto Profit Calculator.
+    </footer>
+
+    <script>
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        document.getElementById('datePicker').value = today.toISOString().split('T')[0];
+
+        async function calculateRealTime() {
+            const btn = document.getElementById('calcBtn');
+            const investment = parseFloat(document.getElementById('investment').value);
+            const currency = document.getElementById('currency').value.toLowerCase(); 
+            const dateStr = document.getElementById('datePicker').value;
+            const coinId = "bitcoin";
+
+            btn.disabled = true; btn.innerText = "Analyzing...";
+            
+            const [year, month, day] = dateStr.split('-');
+            const apiDate = `${day}-${month}-${year}`;
+
+            try {
+                // 1. Get History (BTC has deep history, so standard API works mostly)
+                let oldPrice = null;
+                
+                // Try CoinGecko First
+                try {
+                    const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/history?date=${apiDate}`);
+                    const data = await res.json();
+                    if(data.market_data) oldPrice = data.market_data.current_price[currency];
+                } catch(e) { console.log("CG Failed"); }
+
+                // Backup for OLD dates (2010-2013)
+                if(!oldPrice) {
+                    const ts = Math.floor(new Date(dateStr).getTime() / 1000);
+                    const res = await fetch(`https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=USD&ts=${ts}`);
+                    const data = await res.json();
+                    if(data.BTC) oldPrice = data.BTC.USD; // Default to USD backup
+                }
+
+                if(!oldPrice) throw new Error("Data unavailable.");
+
+                // 2. Get Live
+                const liveRes = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=${currency}`);
+                const liveData = await liveRes.json();
+                let currentPrice = liveData[coinId][currency];
+
+                // 3. Calc
+                const coinsBought = investment / oldPrice;
+                const currentValue = coinsBought * currentPrice;
+                const profit = currentValue - investment;
+                const roi = (profit / investment) * 100;
+
+                // 4. Render
+                const sym = currency.toUpperCase() + " ";
+                document.getElementById('finalValue').innerText = sym + currentValue.toLocaleString(undefined, {minimumFractionDigits: 2});
+                document.getElementById('priceThenDisplay').innerText = oldPrice.toLocaleString();
+                document.getElementById('priceNowDisplay').innerText = currentPrice.toLocaleString();
+                document.getElementById('pnlValue').innerText = profit.toLocaleString(undefined, {minimumFractionDigits: 2});
+                document.getElementById('roiValue').innerText = roi.toFixed(2) + "%";
+
+                document.getElementById('result-placeholder').style.display = 'none';
+                document.getElementById('result-content').style.display = 'block';
+                document.getElementById('affiliate-section').style.display = 'block';
+
+            } catch (err) {
+                alert("Error: Price data unavailable for this date.");
+            } finally {
+                btn.disabled = false; btn.innerText = "Calculate BTC Profit";
+            }
+        }
+    </script>
+</body>
+</html>

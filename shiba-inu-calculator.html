@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiba Inu Profit Calculator | SHIB ROI Tool (2020-2026)</title>
+    <meta name="description" content="Calculate exactly how much money you would have if you invested $100 in Shiba Inu (SHIB) early. Real-time SHIB profit calculator with inflation adjustment.">
+    <link rel="canonical" href="https://yourwebsite.com/shiba-inu-calculator" />
+    
+    <meta property="og:title" content="If I Invested in Shiba Inu Calculator 🐕">
+    <meta property="og:description" content="See the exact ROI of a Shiba Inu investment. Don't check if you want to sleep tonight.">
+    <meta property="og:image" content="https://assets.coingecko.com/coins/images/11939/large/shiba.png">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_CLIENT_ID" crossorigin="anonymous"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* SHIBA BRANDING (Orange) */
+        :root { --bg: #fff7ed; --card: #ffffff; --text-main: #0f172a; --text-sub: #64748b; --border: #fed7aa; --primary: #ea580c; --accent: #ea580c; --success: #16a34a; --danger: #dc2626; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .main-container { background-color: var(--card); border-radius: 20px; box-shadow: 0 10px 40px -5px rgba(234, 88, 12, 0.1); border: 1px solid var(--border); max-width: 950px; width: 100%; overflow: hidden; margin-top: 30px; margin-bottom: 50px; }
+        .header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); background: #ffffff; }
+        h1 { font-size: 1.8rem; margin: 0; font-weight: 800; letter-spacing: -0.5px; }
+        p.subtitle { color: var(--text-sub); margin: 10px 0 0 0; font-size: 1rem; }
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; }
+        .left-panel { padding: 40px; border-right: 1px solid var(--border); }
+        .right-panel { padding: 40px; background: #fafafa; display: flex; flex-direction: column; justify-content: center; min-height: 500px; }
+        @media (max-width: 800px) { .content-grid { grid-template-columns: 1fr; } .left-panel { border-right: none; border-bottom: 1px solid var(--border); padding: 25px; } .right-panel { min-height: auto; padding: 25px; } }
+        .input-group { margin-bottom: 24px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.75rem; color: var(--text-sub); font-weight: 600; text-transform: uppercase; }
+        input, select { width: 100%; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); font-size: 1rem; outline: none; transition: all 0.2s; font-weight: 500; }
+        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.15); }
+        .currency-row { display: grid; grid-template-columns: 120px 1fr; gap: 12px; }
+        #activeCoinBox { background: #fff7ed; border: 1px solid #ffedd5; padding: 12px 16px; border-radius: 10px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+        #activeCoinImg { width: 32px; height: 32px; border-radius: 50%; }
+        .coin-info h3 { margin: 0; font-size: 1rem; font-weight: 700; color: #9a3412; }
+        .coin-info p { margin: 0; font-size: 0.8rem; color: #c2410c; }
+        .cta-btn { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; transition: opacity 0.2s; }
+        .cta-btn:hover { opacity: 0.9; }
+        
+        /* RESULTS */
+        #result-content { display: none; width: 100%; animation: fadeUp 0.5s ease; }
+        .main-value { font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding-top: 25px; border-top: 1px solid var(--border); margin-top: 25px; }
+        .stat-box { background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 15px; }
+        .stat-box h4 { font-size: 0.7rem; color: var(--text-sub); margin: 0 0 5px 0; text-transform: uppercase; font-weight: 700; }
+        .stat-box p { font-size: 1rem; font-weight: 700; margin: 0; color: var(--text-main); }
+        
+        /* AFFILIATE */
+        #affiliate-section { display: none; margin-top: 30px; animation: fadeUp 0.8s ease; }
+        .affiliate-card { background: #fff7ed; border: 1px solid #ffedd5; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 15px; }
+        .aff-btn { display: block; width: 100%; padding: 12px; background: var(--primary); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; margin-bottom: 8px; }
+        
+        /* SEO */
+        .seo-section { max-width: 800px; margin: 0 auto 40px auto; padding: 0 20px; }
+        .seo-section h2 { text-align: center; margin-bottom: 30px; }
+        .faq-item { margin-bottom: 25px; }
+        .faq-item h3 { font-size: 1.1rem; margin-bottom: 8px; font-weight: 700; }
+        .faq-item p { color: var(--text-sub); line-height: 1.6; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="header">
+            <h1>Shiba Inu Profit Calculator</h1>
+            <p class="subtitle">Calculate your potential returns if you invested in SHIB early.</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="left-panel">
+                <div class="input-group">
+                    <label>Investment Capital</label>
+                    <div class="currency-row">
+                        <select id="currency">
+                            <option value="usd">USD</option>
+                            <option value="eur">EUR</option>
+                            <option value="gbp">GBP</option>
+                            <option value="inr">INR</option>
+                        </select>
+                        <input type="number" id="investment" placeholder="100" value="100">
+                    </div>
+                </div>
+
+                <div id="activeCoinBox">
+                    <img id="activeCoinImg" src="https://assets.coingecko.com/coins/images/11939/small/shiba.png" alt="Shiba Inu">
+                    <div class="coin-info">
+                        <h3 id="activeCoinName">Shiba Inu</h3>
+                        <p id="activeCoinSymbol">SHIB</p>
+                    </div>
+                    <input type="hidden" id="selectedCoinId" value="shiba-inu">
+                    <input type="hidden" id="selectedCoinSymbol" value="SHIB">
+                </div>
+
+                <div class="input-group">
+                    <label>Investment Date</label>
+                    <input type="date" id="datePicker"> 
+                </div>
+
+                <button id="calcBtn" class="cta-btn" onclick="calculateRealTime()">Calculate SHIB Profit</button>
+            </div>
+
+            <div class="right-panel">
+                <div id="result-placeholder" style="text-align:center; color:#64748b;">
+                    <p>Enter your SHIB investment details to see the magic numbers.</p>
+                </div>
+
+                <div id="result-content">
+                    <div class="main-value" id="finalValue">0.00</div>
+                    <div class="stats-grid">
+                        <div class="stat-box"><h4>Price Then</h4><p id="priceThenDisplay">0.00</p></div>
+                        <div class="stat-box"><h4>Price Now</h4><p id="priceNowDisplay">0.00</p></div>
+                        <div class="stat-box"><h4>Net Profit</h4><p id="pnlValue">0.00</p></div>
+                        <div class="stat-box"><h4>ROI</h4><p id="roiValue">0%</p></div>
+                    </div>
+
+                    <div id="affiliate-section">
+                        <div class="affiliate-card">
+                            <h3 style="color:#9a3412;">Buy SHIB & Meme Coins 🐕</h3>
+                            <p style="color:#c2410c;">Don't miss the next pump. Trade SHIB on the world's largest exchange.</p>
+                            <a href="https://accounts.binance.com/register" target="_blank" class="aff-btn">Buy SHIB on Binance</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="seo-section">
+        <h2>Frequently Asked Questions about Shiba Inu</h2>
+        <div class="faq-item">
+            <h3>How much would I have if I invested $100 in Shiba Inu in 2020?</h3>
+            <p>If you invested $100 in SHIB at its launch price in August 2020, your investment would be worth millions today. Use our <strong>Shiba Inu Profit Calculator</strong> above to see the exact figure based on today's price.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is the all-time high of Shiba Inu?</h3>
+            <p>Shiba Inu reached its all-time high (ATH) of $0.00008845 in October 2021. Many investors use this calculator to see how much profit they missed by not selling at the peak.</p>
+        </div>
+    </div>
+
+    <footer style="text-align:center; padding:40px; color:#64748b; font-size:0.8rem;">
+        &copy; 2026 Crypto Profit Calculator.
+    </footer>
+
+    <script>
+        // --- 1. SETUP ---
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        document.getElementById('datePicker').value = today.toISOString().split('T')[0];
+
+        // --- 2. DUAL-ENGINE API ---
+        async function fetchBackupHistory(symbol, date) {
+            try {
+                const ts = Math.floor(new Date(date).getTime() / 1000);
+                const res = await fetch(`https://min-api.cryptocompare.com/data/pricehistorical?fsym=${symbol}&tsyms=USD&ts=${ts}`);
+                const data = await res.json();
+                if (data[symbol] && data[symbol].USD) return data[symbol].USD;
+                return null;
+            } catch (e) { return null; }
+        }
+
+        // --- 3. MAIN CALCULATOR ---
+        async function calculateRealTime() {
+            const btn = document.getElementById('calcBtn');
+            const investment = parseFloat(document.getElementById('investment').value);
+            const currency = document.getElementById('currency').value.toLowerCase(); 
+            const dateStr = document.getElementById('datePicker').value;
+            const coinId = "shiba-inu";
+            const symbol = "SHIB";
+
+            // --- DATE GUARD (Prevents errors for early dates) ---
+            const launchDate = new Date("2020-08-01"); 
+            const selectedDate = new Date(dateStr);
+            if (selectedDate < launchDate) {
+                alert("Shiba Inu didn't exist yet! \nIt launched in August 2020. Please pick a later date.");
+                return;
+            }
+
+            btn.disabled = true; btn.innerText = "Analyzing...";
+            const [year, month, day] = dateStr.split('-');
+            const apiDate = `${day}-${month}-${year}`;
+
+            try {
+                let oldPrice = null;
+
+                // 1. Try CoinGecko First
+                try {
+                    const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/history?date=${apiDate}`);
+                    if(res.status === 429) throw new Error("Rate Limit");
+                    const data = await res.json();
+                    if(data.market_data) oldPrice = data.market_data.current_price[currency];
+                } catch(e) { console.log("CG Failed/Busy"); }
+
+                // 2. Backup Source (CryptoCompare) if CG failed
+                if(!oldPrice) {
+                    oldPrice = await fetchBackupHistory(symbol, dateStr);
+                }
+
+                if(!oldPrice) throw new Error("Price data unavailable. Try again in 10 seconds.");
+
+                // 3. Live Price
+                const liveRes = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=${currency}`);
+                const liveData = await liveRes.json();
+                let currentPrice = liveData[coinId][currency];
+
+                // 4. Calc
+                const coinsBought = investment / oldPrice;
+                const currentValue = coinsBought * currentPrice;
+                const profit = currentValue - investment;
+                const roi = (profit / investment) * 100;
+
+                // 5. Render
+                const sym = currency.toUpperCase() + " ";
+                document.getElementById('finalValue').innerText = sym + currentValue.toLocaleString(undefined, {minimumFractionDigits: 2});
+                
+                // Fix decimals for small coins like SHIB
+                document.getElementById('priceThenDisplay').innerText = oldPrice < 0.01 ? oldPrice.toFixed(8) : oldPrice.toLocaleString();
+                document.getElementById('priceNowDisplay').innerText = currentPrice < 0.01 ? currentPrice.toFixed(8) : currentPrice.toLocaleString();
+                
+                document.getElementById('pnlValue').innerText = profit.toLocaleString(undefined, {minimumFractionDigits: 2});
+                document.getElementById('roiValue').innerText = roi.toFixed(2) + "%";
+
+                document.getElementById('result-placeholder').style.display = 'none';
+                document.getElementById('result-content').style.display = 'block';
+                document.getElementById('affiliate-section').style.display = 'block';
+
+            } catch (err) {
+                alert(err.message);
+            } finally {
+                btn.disabled = false; btn.innerText = "Calculate SHIB Profit";
+            }
+        }
+    </script>
+</body>
+</html>
