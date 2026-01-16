@@ -7,6 +7,8 @@
     <title>Crypto Profit Calculator | Historical ROI Tool (USD, EUR, GBP)</title>
     <meta name="description" content="Calculate historical crypto returns for Bitcoin, Ethereum, and Solana. See exactly what your investment would be worth today in USD, EUR, or GBP.">
     
+    <link rel="canonical" href="https://tropismlabs.com/" />
+    
     <meta property="og:title" content="Crypto Profit Calculator 🚀">
     <meta property="og:description" content="See exactly how much you missed out on (or saved). Calculate your historical crypto ROI instantly.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=1200&q=80">
@@ -16,172 +18,70 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bg: #f8fafc;          
-            --card: #ffffff;     
-            --text-main: #0f172a;   
-            --text-sub: #64748b;  
-            --border: #e2e8f0;      
-            --primary: #0f172a;      
-            --accent: #2563eb;      
-            --success: #16a34a;     
-            --danger: #dc2626;      
-        }
-
+        :root { --bg: #f8fafc; --card: #ffffff; --text-main: #0f172a; --text-sub: #64748b; --border: #e2e8f0; --primary: #0f172a; --accent: #2563eb; --success: #16a34a; --danger: #dc2626; }
         * { box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .main-container {
-            background-color: var(--card);
-            border-radius: 20px;
-            box-shadow: 0 10px 40px -5px rgba(0,0,0,0.05);
-            border: 1px solid var(--border);
-            max-width: 950px;
-            width: 100%;
-            overflow: hidden;
-            margin-top: 30px;
-            margin-bottom: 50px;
-        }
-
-        .header {
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            background: #ffffff;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .main-container { background-color: var(--card); border-radius: 20px; box-shadow: 0 10px 40px -5px rgba(0,0,0,0.05); border: 1px solid var(--border); max-width: 950px; width: 100%; overflow: hidden; margin-top: 30px; margin-bottom: 50px; }
+        .header { padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); background: #ffffff; }
         h1 { font-size: 1.8rem; margin: 0; font-weight: 800; letter-spacing: -0.5px; }
         p.subtitle { color: var(--text-sub); margin: 10px 0 0 0; font-size: 1rem; }
-
-        /* LAYOUT */
         .content-grid { display: grid; grid-template-columns: 1fr 1fr; }
         .left-panel { padding: 40px; border-right: 1px solid var(--border); }
         .right-panel { padding: 40px; background: #fafafa; display: flex; flex-direction: column; justify-content: center; min-height: 500px; }
-
-        @media (max-width: 800px) {
-            .content-grid { grid-template-columns: 1fr; }
-            .left-panel { border-right: none; border-bottom: 1px solid var(--border); padding: 25px; }
-            .right-panel { min-height: auto; padding: 25px; }
-        }
-
-        /* INPUTS */
+        @media (max-width: 800px) { .content-grid { grid-template-columns: 1fr; } .left-panel { border-right: none; border-bottom: 1px solid var(--border); padding: 25px; } .right-panel { min-height: auto; padding: 25px; } }
         .input-group { margin-bottom: 24px; }
-        label { display: block; margin-bottom: 8px; font-size: 0.75rem; color: var(--text-sub); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        input, select {
-            width: 100%; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border);
-            background: #ffffff; color: var(--text-main); font-size: 1rem; outline: none;
-            transition: all 0.2s; font-weight: 500; appearance: none;
-        }
+        label { display: block; margin-bottom: 8px; font-size: 0.75rem; color: var(--text-sub); font-weight: 600; text-transform: uppercase; }
+        input, select { width: 100%; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); background: #ffffff; color: var(--text-main); font-size: 1rem; outline: none; transition: all 0.2s; font-weight: 500; }
         input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(37,99,235,0.1); }
-
         .currency-row { display: grid; grid-template-columns: 120px 1fr; gap: 12px; }
         .asset-select-row { display: grid; grid-template-columns: 1fr 1.3fr; gap: 12px; }
-
-        /* ACTIVE ASSET BOX */
-        #activeCoinBox {
-            background: #f8fafc; border: 1px solid var(--border); padding: 12px 16px;
-            border-radius: 10px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
-        }
+        #activeCoinBox { background: #f8fafc; border: 1px solid var(--border); padding: 12px 16px; border-radius: 10px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
         #activeCoinImg { width: 32px; height: 32px; border-radius: 50%; }
         .coin-info h3 { margin: 0; font-size: 1rem; font-weight: 700; }
         .coin-info p { margin: 0; font-size: 0.8rem; color: var(--text-sub); }
-
-        /* SEARCH RESULTS */
         .search-wrapper { position: relative; width: 100%; }
-        #searchResults {
-            position: absolute; top: 100%; left: 0; width: 100%;
-            background: #ffffff; border: 1px solid var(--border);
-            border-radius: 12px; max-height: 200px; overflow-y: auto;
-            z-index: 50; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 5px;
-        }
+        #searchResults { position: absolute; top: 100%; left: 0; width: 100%; background: #ffffff; border: 1px solid var(--border); border-radius: 12px; max-height: 200px; overflow-y: auto; z-index: 50; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 5px; }
         .search-item { padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
         .search-item:hover { background: #f8fafc; }
         .search-item img { width: 20px; height: 20px; border-radius: 50%; }
-
-        /* BUTTONS */
-        .cta-btn {
-            width: 100%; padding: 16px; background: var(--primary); color: white;
-            border: none; border-radius: 10px; font-size: 1rem; font-weight: 700;
-            cursor: pointer; margin-top: 10px; transition: opacity 0.2s;
-        }
+        .cta-btn { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; transition: opacity 0.2s; }
         .cta-btn:hover { opacity: 0.9; }
         .cta-btn:disabled { opacity: 0.5; cursor: wait; background: #475569; }
-
-        /* STATUS MESSAGE */
         #statusMessage { margin-top: 15px; font-size: 0.85rem; text-align: center; padding: 12px; border-radius: 8px; display: none; }
         .status-error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
-        
-        /* RESULTS AREA */
         #result-content { display: none; width: 100%; animation: fadeUp 0.5s ease; }
         #result-placeholder { text-align: center; color: var(--text-sub); opacity: 0.7; font-size: 0.9rem; line-height: 1.5; padding: 0 20px;}
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
         .result-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .result-label { font-size: 0.8rem; color: var(--text-sub); font-weight: 600; text-transform: uppercase; }
         .main-value { font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 20px; letter-spacing: -1px; }
         .badge { padding: 6px 14px; border-radius: 100px; font-size: 0.9rem; font-weight: 700; }
         .badge-green { background: #dcfce7; color: #166534; }
         .badge-red { background: #fee2e2; color: #991b1b; }
-
-        /* 4-GRID STATS */
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding-top: 25px; border-top: 1px solid var(--border); margin-top: 25px; }
         .stat-box { background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 15px; }
-        .stat-box h4 { font-size: 0.7rem; color: var(--text-sub); margin: 0 0 5px 0; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+        .stat-box h4 { font-size: 0.7rem; color: var(--text-sub); margin: 0 0 5px 0; text-transform: uppercase; font-weight: 700; }
         .stat-box p { font-size: 1rem; font-weight: 700; margin: 0; color: var(--text-main); }
-
-        /* --- AFFILIATE SECTION --- */
-        #affiliate-section {
-            display: none; /* Hidden until calc is done */
-            margin-top: 30px;
-            animation: fadeUp 0.8s ease;
-        }
-        .affiliate-card {
-            background: #eff6ff; border: 1px solid #dbeafe; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 15px;
-        }
+        #affiliate-section { display: none; margin-top: 30px; animation: fadeUp 0.8s ease; }
+        .affiliate-card { background: #eff6ff; border: 1px solid #dbeafe; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 15px; }
         .affiliate-card h3 { margin: 0 0 5px 0; color: #1e40af; font-size: 1rem; }
         .affiliate-card p { margin: 0 0 15px 0; font-size: 0.85rem; color: #1e3a8a; }
-        
-        .aff-btn {
-            display: block; width: 100%; padding: 12px; background: #2563eb; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; transition: transform 0.1s;
-        }
+        .aff-btn { display: block; width: 100%; padding: 12px; background: #2563eb; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; transition: transform 0.1s; }
         .aff-btn:hover { opacity: 0.9; transform: translateY(-2px); }
         .aff-btn.secondary { background: white; color: #0f172a; border: 1px solid #cbd5e1; }
-
-        /* NEWSLETTER */
         .newsletter-box { text-align: center; margin-top: 25px; border-top: 1px solid #e2e8f0; padding-top: 25px; }
         .newsletter-box h4 { margin: 0 0 5px 0; font-size: 0.9rem; }
         .newsletter-box p { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 10px; }
         .news-form { display: flex; gap: 8px; }
         .news-form input { flex: 1; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; }
         .news-form button { padding: 10px 15px; background: #0f172a; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
-
-        /* AD BANNER */
-        .ad-banner {
-            width: 100%; max-width: 950px; height: 120px; 
-            background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            color: #94a3b8; font-size: 0.8rem; margin: 0 auto 40px auto;
-        }
-
-        /* GLOBAL SEO CONTENT */
+        .ad-banner { width: 100%; max-width: 950px; height: 120px; background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 0.8rem; margin: 0 auto 40px auto; }
         .seo-section { max-width: 800px; margin: 0 auto 40px auto; padding: 0 20px; }
         .seo-section h2 { text-align: center; margin-bottom: 30px; font-size: 1.4rem; }
         .faq-item { margin-bottom: 25px; }
         .faq-item h3 { font-size: 1.1rem; margin-bottom: 8px; font-weight: 700; }
         .faq-item p { color: var(--text-sub); line-height: 1.6; font-size: 0.95rem; }
-
-        .site-footer { text-align: center; font-size: 0.8rem; color: var(--text-sub); border-top: 1px solid #e2e8f0; padding-top: 30px; padding-bottom: 30px; width: 100%; }
+        .site-footer { text-align: center; font-size: 0.8rem; color: var(--text-sub); border-top: 1px solid #e2e8f0; padding-top: 30px; padding-bottom: 30px; width: 100%; background:#f1f5f9; margin-top:50px; }
     </style>
 </head>
 <body>
@@ -308,11 +208,8 @@
                             <p>Securely buy & store crypto with our recommended partners.</p>
                             
                             <a href="https://accounts.binance.com/register" target="_blank" class="aff-btn">Trade on Binance (Global)</a>
-                            
                             <a href="https://www.coinbase.com/signup" target="_blank" class="aff-btn secondary">Sign up on Coinbase (USA/EU)</a>
-                            
                             <a href="https://www.bybit.com/register" target="_blank" class="aff-btn secondary">Get Bybit Bonus</a>
-                            
                             <a href="https://shop.ledger.com" target="_blank" class="aff-btn secondary">Get a Ledger Wallet (Secure)</a>
                         </div>
 
@@ -325,13 +222,40 @@
                             </div>
                         </div>
                     </div>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <div style="max-width: 950px; margin: 40px auto; padding: 0 20px;">
+        <h3 style="text-align:center; color:#0f172a; margin-bottom:20px;">Explore Specific Coin Calculators</h3>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:15px;">
+            <a href="bitcoin-calculator.html" style="text-decoration:none; color:inherit;">
+                <div style="background:white; padding:20px; border:1px solid #e2e8f0; border-radius:12px; text-align:center; transition:transform 0.2s;">
+                    <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" style="width:30px; margin-bottom:10px;">
+                    <div style="font-weight:700;">Bitcoin Calculator</div>
+                    <div style="font-size:0.8rem; color:#64748b;">Calculate BTC ROI</div>
+                </div>
+            </a>
+            <a href="ethereum-calculator.html" style="text-decoration:none; color:inherit;">
+                <div style="background:white; padding:20px; border:1px solid #e2e8f0; border-radius:12px; text-align:center; transition:transform 0.2s;">
+                    <img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" style="width:30px; margin-bottom:10px;">
+                    <div style="font-weight:700;">Ethereum Calculator</div>
+                    <div style="font-size:0.8rem; color:#64748b;">Calculate ETH ROI</div>
+                </div>
+            </a>
+            <a href="shiba-inu-calculator.html" style="text-decoration:none; color:inherit;">
+                <div style="background:white; padding:20px; border:1px solid #e2e8f0; border-radius:12px; text-align:center; transition:transform 0.2s;">
+                    <img src="https://assets.coingecko.com/coins/images/11939/small/shiba.png" style="width:30px; margin-bottom:10px;">
+                    <div style="font-weight:700;">Shiba Inu Calculator</div>
+                    <div style="font-size:0.8rem; color:#64748b;">Calculate SHIB ROI</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
     <div class="ad-banner">
-    
+        ADVERTISEMENT SPACE (Google AdSense)
     </div>
 
     <div class="seo-section">
@@ -351,7 +275,26 @@
     </div>
 
     <footer class="site-footer">
-        <p>&copy; <span id="yearDisplay"></span> Crypto Profit Calculator. Not financial advice.</p>
+        <div style="max-width:950px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:20px; text-align:left; padding-bottom:20px;">
+            <div>
+                <h4 style="margin-bottom:10px;">Popular Calculators</h4>
+                <ul style="list-style:none; padding:0; line-height:2;">
+                    <li><a href="index.html" style="color:#64748b; text-decoration:none;">Global Crypto Calculator</a></li>
+                    <li><a href="bitcoin-calculator.html" style="color:#64748b; text-decoration:none;">Bitcoin Profit Tool</a></li>
+                    <li><a href="shiba-inu-calculator.html" style="color:#64748b; text-decoration:none;">Shiba Inu ROI Tool</a></li>
+                    <li><a href="ethereum-calculator.html" style="color:#64748b; text-decoration:none;">Ethereum Calculator</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="margin-bottom:10px;">Legal</h4>
+                <ul style="list-style:none; padding:0; line-height:2;">
+                    <li><a href="privacy.html" style="color:#64748b; text-decoration:none;">Privacy Policy</a></li>
+                    <li><a href="#" style="color:#64748b; text-decoration:none;">Terms of Service</a></li>
+                    <li><a href="#" style="color:#64748b; text-decoration:none;">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <p style="margin-top:30px; font-size:0.8rem; color:#94a3b8;">&copy; 2026 Crypto Profit Calculator. Data by CoinGecko.</p>
     </footer>
 
     <script>
@@ -359,7 +302,6 @@
         const today = new Date();
         today.setDate(today.getDate() - 1);
         document.getElementById('datePicker').value = today.toISOString().split('T')[0];
-        document.getElementById('yearDisplay').innerText = new Date().getFullYear();
         const apiCache = {}; 
 
         // --- UX HELPERS ---
@@ -487,7 +429,7 @@
                 let oldPrice = null;
                 let usedBackup = false;
 
-                // 1. Primary Source (Skip for deep history > 5 years to be safe)
+                // 1. Primary Source
                 if (parseInt(year) > 2019) {
                     try {
                         const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/history?date=${apiDate}`, { credentials: 'omit' });

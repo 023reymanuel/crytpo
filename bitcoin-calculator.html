@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bitcoin Profit Calculator | ROI Tool (2009-2026)</title>
     <meta name="description" content="Calculate exactly how much you would have if you invested $10, $100, or $1,000 in Bitcoin years ago. Real-time BTC profit calculator.">
-    <link rel="canonical" href="https://yourwebsite.com/bitcoin-calculator" />
+    <link rel="canonical" href="https://tropismlabs.com/bitcoin-calculator.html" />
     
     <meta property="og:title" content="If I Invested in Bitcoin Calculator 🚀">
     <meta property="og:image" content="https://assets.coingecko.com/coins/images/1/large/bitcoin.png">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_CLIENT_ID" crossorigin="anonymous"></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         /* Shared CSS */
@@ -53,6 +52,7 @@
         .faq-item h3 { font-size: 1.1rem; margin-bottom: 8px; font-weight: 700; }
         .faq-item p { color: var(--text-sub); line-height: 1.6; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .site-footer { text-align: center; font-size: 0.8rem; color: var(--text-sub); border-top: 1px solid #e2e8f0; padding-top: 30px; padding-bottom: 30px; width: 100%; background:#f1f5f9; margin-top:50px; }
     </style>
 </head>
 <body>
@@ -90,7 +90,22 @@
 
                 <div class="input-group">
                     <label>Investment Date</label>
-                    <input type="date" id="datePicker"> 
+                    <select id="timeFrameSelect" onchange="applyTimeFrame(this.value)" style="margin-bottom:10px;">
+                        <option value="" disabled selected>Quick Select Date</option>
+                        <optgroup label="Recent">
+                            <option value="w-1">1 Week Ago</option>
+                            <option value="m-1">1 Month Ago</option>
+                            <option value="m-6">6 Months Ago</option>
+                        </optgroup>
+                        <optgroup label="Long Term">
+                            <option value="y-1">1 Year Ago</option>
+                            <option value="y-5">5 Years Ago</option>
+                            <option value="y-10">10 Years Ago (2016)</option>
+                            <option value="y-13">13 Years Ago (2013)</option>
+                        </optgroup>
+                    </select>
+                    <div id="dateFeedback" style="font-size:0.8rem; color:#f7931a; margin-bottom:5px;"></div>
+                    <input type="date" id="datePicker" onchange="resetDropdown()"> 
                 </div>
 
                 <button id="calcBtn" class="cta-btn" onclick="calculateRealTime()">Calculate BTC Profit</button>
@@ -123,25 +138,66 @@
     </div>
 
     <div class="seo-section">
-        <h2>Bitcoin Investment FAQ</h2>
-        <div class="faq-item">
-            <h3>What if I invested $100 in Bitcoin in 2010?</h3>
-            <p>In 2010, Bitcoin's price was less than $0.10. A $100 investment back then would be worth hundreds of millions of dollars today. Use this tool to check the exact ROI for any specific date.</p>
-        </div>
-        <div class="faq-item">
-            <h3>How to calculate Bitcoin profit?</h3>
-            <p>Profit = (Current Price - Buy Price) * Amount of BTC. This calculator does the math for you instantly using historical price data from CoinGecko.</p>
-        </div>
+        <h2>Bitcoin ROI Calculator: Calculate Historical Profits</h2>
+        <p>Bitcoin (BTC) has been the best-performing asset of the last decade. Many investors ask, "What if I invested $100 in Bitcoin in 2010?" The answer is life-changing. Our <strong>Bitcoin Profit Calculator</strong> allows you to calculate the exact Return on Investment (ROI) from any date in history to today.</p>
+
+        <h3>How to use this Bitcoin Investment Calculator?</h3>
+        <p>Using this tool is simple. Enter your initial investment amount (e.g., $100, $1,000) and select the date you "bought" Bitcoin. The calculator pulls historical price data from CoinGecko and compares it to the current live price of BTC. It automatically calculates:</p>
+        <ul>
+            <li><strong>Total Profit/Loss:</strong> The raw value gained.</li>
+            <li><strong>Percentage Growth:</strong> The ROI percentage (often over 10,000% for early investors).</li>
+            <li><strong>Current Value:</strong> What your portfolio would be worth today.</li>
+        </ul>
+
+        <h3>Is Bitcoin Investment taxable?</h3>
+        <p>In the United States (IRS), United Kingdom (HMRC), and Canada (CRA), crypto-to-fiat profits are subject to Capital Gains Tax. While this calculator shows your <em>gross profit</em>, we recommend using tax software or consulting a professional to calculate your net obligations.</p>
     </div>
 
-    <footer style="text-align:center; padding:40px; color:#64748b; font-size:0.8rem;">
-        &copy; 2026 Crypto Profit Calculator.
+    <footer class="site-footer">
+        <div style="max-width:950px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:20px; text-align:left; padding-bottom:20px;">
+            <div>
+                <h4 style="margin-bottom:10px;">Popular Calculators</h4>
+                <ul style="list-style:none; padding:0; line-height:2;">
+                    <li><a href="index.html" style="color:#64748b; text-decoration:none;">Global Crypto Calculator</a></li>
+                    <li><a href="bitcoin-calculator.html" style="color:#64748b; text-decoration:none;">Bitcoin Profit Tool</a></li>
+                    <li><a href="shiba-inu-calculator.html" style="color:#64748b; text-decoration:none;">Shiba Inu ROI Tool</a></li>
+                    <li><a href="ethereum-calculator.html" style="color:#64748b; text-decoration:none;">Ethereum Calculator</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="margin-bottom:10px;">Legal</h4>
+                <ul style="list-style:none; padding:0; line-height:2;">
+                    <li><a href="privacy.html" style="color:#64748b; text-decoration:none;">Privacy Policy</a></li>
+                    <li><a href="#" style="color:#64748b; text-decoration:none;">Terms of Service</a></li>
+                    <li><a href="#" style="color:#64748b; text-decoration:none;">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <p style="margin-top:30px; font-size:0.8rem; color:#94a3b8;">&copy; 2026 Crypto Profit Calculator. Data by CoinGecko.</p>
     </footer>
 
     <script>
         const today = new Date();
         today.setDate(today.getDate() - 1);
         document.getElementById('datePicker').value = today.toISOString().split('T')[0];
+
+        // --- NEW: TIME FRAME LOGIC ---
+        function applyTimeFrame(val) {
+            if (!val) return;
+            const d = new Date();
+            const [unit, amount] = val.split('-');
+            const num = parseInt(amount);
+            if (unit === 'w') d.setDate(d.getDate() - (num * 7));
+            else if (unit === 'm') d.setMonth(d.getMonth() - num);
+            else if (unit === 'y') d.setFullYear(d.getFullYear() - num);
+            const dateStr = d.toISOString().split('T')[0];
+            document.getElementById('datePicker').value = dateStr;
+            document.getElementById('dateFeedback').innerText = `Selected: ${dateStr}`;
+        }
+        function resetDropdown() {
+            document.getElementById('timeFrameSelect').value = "";
+            document.getElementById('dateFeedback').innerText = "";
+        }
 
         async function calculateRealTime() {
             const btn = document.getElementById('calcBtn');
@@ -156,38 +212,32 @@
             const apiDate = `${day}-${month}-${year}`;
 
             try {
-                // 1. Get History (BTC has deep history, so standard API works mostly)
                 let oldPrice = null;
                 
-                // Try CoinGecko First
                 try {
                     const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/history?date=${apiDate}`);
                     const data = await res.json();
                     if(data.market_data) oldPrice = data.market_data.current_price[currency];
                 } catch(e) { console.log("CG Failed"); }
 
-                // Backup for OLD dates (2010-2013)
                 if(!oldPrice) {
                     const ts = Math.floor(new Date(dateStr).getTime() / 1000);
                     const res = await fetch(`https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=USD&ts=${ts}`);
                     const data = await res.json();
-                    if(data.BTC) oldPrice = data.BTC.USD; // Default to USD backup
+                    if(data.BTC) oldPrice = data.BTC.USD;
                 }
 
                 if(!oldPrice) throw new Error("Data unavailable.");
 
-                // 2. Get Live
                 const liveRes = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=${currency}`);
                 const liveData = await liveRes.json();
                 let currentPrice = liveData[coinId][currency];
 
-                // 3. Calc
                 const coinsBought = investment / oldPrice;
                 const currentValue = coinsBought * currentPrice;
                 const profit = currentValue - investment;
                 const roi = (profit / investment) * 100;
 
-                // 4. Render
                 const sym = currency.toUpperCase() + " ";
                 document.getElementById('finalValue').innerText = sym + currentValue.toLocaleString(undefined, {minimumFractionDigits: 2});
                 document.getElementById('priceThenDisplay').innerText = oldPrice.toLocaleString();

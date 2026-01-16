@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ethereum Profit Calculator | ETH ROI Tool (2015-2026)</title>
     <meta name="description" content="Calculate the ROI of Ethereum. See how much $1,000 of ETH bought in 2016 or 2017 would be worth today. Real-time profit calculator.">
-    <link rel="canonical" href="https://yourwebsite.com/ethereum-calculator" />
+    <link rel="canonical" href="https://tropismlabs.com/ethereum-calculator.html" />
     
     <meta property="og:title" content="Ethereum Time Machine 💎">
     <meta property="og:image" content="https://assets.coingecko.com/coins/images/279/large/ethereum.png">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_AD_CLIENT_ID" crossorigin="anonymous"></script>
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ETHEREUM THEME (Blue/Purple) */
+        /* ETHEREUM THEME */
         :root { --bg: #f8fafc; --card: #ffffff; --text-main: #0f172a; --text-sub: #64748b; --border: #e2e8f0; --primary: #627eea; /* ETH BLUE */ --accent: #627eea; }
         * { box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
@@ -52,6 +51,7 @@
         .faq-item h3 { font-size: 1.1rem; margin-bottom: 8px; font-weight: 700; }
         .faq-item p { color: var(--text-sub); line-height: 1.6; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .site-footer { text-align: center; font-size: 0.8rem; color: var(--text-sub); border-top: 1px solid #e2e8f0; padding-top: 30px; padding-bottom: 30px; width: 100%; background:#f1f5f9; margin-top:50px; }
     </style>
 </head>
 <body>
@@ -89,7 +89,21 @@
 
                 <div class="input-group">
                     <label>Investment Date</label>
-                    <input type="date" id="datePicker"> 
+                    <select id="timeFrameSelect" onchange="applyTimeFrame(this.value)" style="margin-bottom:10px;">
+                        <option value="" disabled selected>Quick Select Date</option>
+                        <optgroup label="Recent">
+                            <option value="w-1">1 Week Ago</option>
+                            <option value="m-1">1 Month Ago</option>
+                            <option value="m-6">6 Months Ago</option>
+                        </optgroup>
+                        <optgroup label="Long Term">
+                            <option value="y-1">1 Year Ago</option>
+                            <option value="y-5">5 Years Ago</option>
+                            <option value="y-10">10 Years Ago (2016)</option>
+                        </optgroup>
+                    </select>
+                    <div id="dateFeedback" style="font-size:0.8rem; color:#627eea; margin-bottom:5px;"></div>
+                    <input type="date" id="datePicker" onchange="resetDropdown()"> 
                 </div>
 
                 <button id="calcBtn" class="cta-btn" onclick="calculateRealTime()">Calculate ETH Profit</button>
@@ -121,18 +135,36 @@
 
     <div class="seo-section">
         <h2>Ethereum Investment FAQ</h2>
-        <div class="faq-item">
-            <h3>What if I invested $1,000 in Ethereum in 2016?</h3>
-            <p>In 2016, Ethereum traded between $1 and $10. A $1,000 investment then would be worth millions today. Use the calculator to see the precise value based on the exact date.</p>
-        </div>
-        <div class="faq-item">
-            <h3>Can I calculate ETH staking rewards?</h3>
-            <p>This calculator shows capital gains (price increase). To calculate staking rewards (APY), you would need to add approximately 3-5% per year to the final total.</p>
-        </div>
+        <p>Ethereum (ETH) is the backbone of DeFi and NFTs. Since its ICO in 2014, ETH has provided massive returns to early adopters. This <strong>Ethereum Investment Calculator</strong> helps you visualize the power of holding (HODLing) ETH over long periods, filtering out the daily noise of market volatility.</p>
+
+        <h3>Ethereum vs. Bitcoin ROI</h3>
+        <p>While Bitcoin is "digital gold," Ethereum often behaves like a tech stock with higher volatility. Historically, during bull markets, ETH has outperformed BTC in percentage gains. Use this tool to compare a $1,000 investment in ETH versus BTC on the same date to see which would have performed better.</p>
+
+        <h3>Does this calculate Staking Rewards?</h3>
+        <p>This tool calculates <strong>Capital Appreciation</strong> (price increase) only. It does not include Ethereum staking rewards (approx. 3-5% APY). If you staked your ETH on platforms like Binance or Lido, your actual returns would be even higher than what is shown here.</p>
     </div>
 
-    <footer style="text-align:center; padding:40px; color:#64748b; font-size:0.8rem;">
-        &copy; 2026 Crypto Profit Calculator.
+    <footer class="site-footer">
+        <div style="max-width:950px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:20px; text-align:left; padding-bottom:20px;">
+            <div>
+                <h4 style="margin-bottom:10px;">Popular Calculators</h4>
+                <ul style="list-style:none; padding:0; line-height:2;">
+                    <li><a href="index.html" style="color:#64748b; text-decoration:none;">Global Crypto Calculator</a></li>
+                    <li><a href="bitcoin-calculator.html" style="color:#64748b; text-decoration:none;">Bitcoin Profit Tool</a></li>
+                    <li><a href="shiba-inu-calculator.html" style="color:#64748b; text-decoration:none;">Shiba Inu ROI Tool</a></li>
+                    <li><a href="ethereum-calculator.html" style="color:#64748b; text-decoration:none;">Ethereum Calculator</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="margin-bottom:10px;">Legal</h4>
+                <ul style="list-style:none; padding:0; line-height:2;">
+                    <li><a href="privacy.html" style="color:#64748b; text-decoration:none;">Privacy Policy</a></li>
+                    <li><a href="#" style="color:#64748b; text-decoration:none;">Terms of Service</a></li>
+                    <li><a href="#" style="color:#64748b; text-decoration:none;">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <p style="margin-top:30px; font-size:0.8rem; color:#94a3b8;">&copy; 2026 Crypto Profit Calculator. Data by CoinGecko.</p>
     </footer>
 
     <script>
@@ -140,7 +172,25 @@
         today.setDate(today.getDate() - 1);
         document.getElementById('datePicker').value = today.toISOString().split('T')[0];
 
-        // --- BACKUP API FUNCTION (The Fix) ---
+        // --- NEW: TIME FRAME LOGIC ---
+        function applyTimeFrame(val) {
+            if (!val) return;
+            const d = new Date();
+            const [unit, amount] = val.split('-');
+            const num = parseInt(amount);
+            if (unit === 'w') d.setDate(d.getDate() - (num * 7));
+            else if (unit === 'm') d.setMonth(d.getMonth() - num);
+            else if (unit === 'y') d.setFullYear(d.getFullYear() - num);
+            const dateStr = d.toISOString().split('T')[0];
+            document.getElementById('datePicker').value = dateStr;
+            document.getElementById('dateFeedback').innerText = `Selected: ${dateStr}`;
+        }
+        function resetDropdown() {
+            document.getElementById('timeFrameSelect').value = "";
+            document.getElementById('dateFeedback').innerText = "";
+        }
+
+        // --- DUAL-ENGINE API ---
         async function fetchBackupHistory(symbol, date) {
             try {
                 const ts = Math.floor(new Date(date).getTime() / 1000);
